@@ -57,8 +57,6 @@ class PlatformService extends Service
         }
     }
 
-
-
     /**
      * @param $params
      * @return bool
@@ -151,6 +149,23 @@ class PlatformService extends Service
     public function getAll()
     {
         $data = $this->getRepository()->getAll();
+
+        if (!$data) {
+            throw new Exception();
+        }
+
+        return $data;
+    }
+
+    /**
+     * @param $name
+     * @return mixed
+     * @throws ReflectionException
+     * @throws Exception
+     */
+    public function getByName($name)
+    {
+        $data = $this->getRepository()->getByName($name);
 
         if (!$data) {
             throw new Exception();

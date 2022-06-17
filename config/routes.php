@@ -1,11 +1,9 @@
 <?php
 
-use App\Http\Api\v1\Auth\Token;
+use App\Http\Api\v1\Consult\ConsultPlatform;
 use App\Http\Site\Logged\Platform;
 use App\Http\Site\Logged\Rom;
 use App\Http\Site\Logged\Home;
-use App\Middleware\ApiAuthentication;
-use App\Routing\ApiRouteResolver;
 use Slim\App;
 
 return function (App $app) {
@@ -113,4 +111,10 @@ return function (App $app) {
         '/crud/delete/platform',
         Platform::class
     )->setArgument('action', 'delete');
+
+    // API
+    $app->any(
+        '/api/v{version:[1]{1}}/platform',
+        ConsultPlatform::class
+    )->setArgument('action', 'get');
 };

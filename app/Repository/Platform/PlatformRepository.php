@@ -25,6 +25,14 @@ class PlatformRepository extends Repository
         return $queryBuilder->get()->first();
     }
 
+    public function getByName($name)
+    {
+        $queryBuilder = $this->newQuery();
+        $queryBuilder->where('name', $name);
+
+        return $queryBuilder->get();
+    }
+
     /**
      * @return Builder[]|Collection
      */
