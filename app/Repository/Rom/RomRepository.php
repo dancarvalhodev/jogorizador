@@ -20,7 +20,9 @@ class RomRepository extends Repository
     public function getFromId($id)
     {
         $queryBuilder = $this->newQuery();
-        $queryBuilder->where('id', $id);
+        $queryBuilder->select('platforms.name as platform_name', 'platforms.id as platform_id', 'roms.id', 'roms.name as rom_name', 'roms.developer', 'roms.publisher', 'roms.series', 'roms.mode', 'roms.release');
+        $queryBuilder->join('platforms', 'platforms.id', '=', 'roms.platform_id');
+        $queryBuilder->where('roms.id', $id);
 
         return $queryBuilder->get()->first();
     }
@@ -31,6 +33,9 @@ class RomRepository extends Repository
     public function getAll()
     {
         $queryBuilder = $this->newQuery();
+        $queryBuilder->select('platforms.name as platform_name', 'platforms.id as platform_id', 'roms.id', 'roms.name as rom_name', 'roms.developer', 'roms.publisher', 'roms.series', 'roms.mode', 'roms.release');
+        $queryBuilder->join('platforms', 'platforms.id', '=', 'roms.platform_id');
+
         return $queryBuilder->get();
     }
 

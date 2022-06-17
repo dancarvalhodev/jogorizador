@@ -5,6 +5,7 @@ namespace App\Service\Rom;
 use App\Entity\Rom\RomEntity;
 use App\Repository\Rom\RomRepository;
 use App\Service\Service;
+use Carbon\Carbon;
 use Exception;
 use ReflectionException;
 use Throwable;
@@ -22,6 +23,21 @@ class RomService extends Service
      */
     public function insert($params)
     {
+        if (!$params['name'] ||
+            !$params['platforms'] ||
+            !$params['developer'] ||
+            !$params['publisher'] ||
+            !$params['series'] ||
+            !$params['release'] ||
+            !$params['mode']
+        ) {
+            return false;
+        }
+
+        if (Carbon::parse($params['release'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            return false;
+        }
+
         $this->beginTransaction();
 
         try {
@@ -53,6 +69,18 @@ class RomService extends Service
      */
     public function update($params)
     {
+        if (!$params['id'] ||
+            !$params['name'] ||
+            !$params['platforms'] ||
+            !$params['developer'] ||
+            !$params['publisher'] ||
+            !$params['series'] ||
+            !$params['release'] ||
+            !$params['mode']
+        ) {
+            return false;
+        }
+
         $this->beginTransaction();
 
         try {

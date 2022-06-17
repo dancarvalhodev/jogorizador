@@ -5,9 +5,12 @@ namespace App\Http\Site\Logged;
 use App\Helpers\Session;
 use App\Http\Controller;
 use App\Service\Platform\PlatformService;
+use Carbon\Carbon;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
 use Slim\Views\Twig;
+use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -74,6 +77,7 @@ class Platform extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws ReflectionException
      */
     public function updateForm()
     {
@@ -90,9 +94,9 @@ class Platform extends Controller
                     'name' => $return->name,
                     'developer' => $return->developer,
                     'generation' => $return->generation,
-                    'release_jp' => date('Y-m-d', strtotime($return->release_jp)),
-                    'release_us' => date('Y-m-d', strtotime($return->release_us)),
-                    'release_br' => date('Y-m-d', strtotime($return->release_br)),
+                    'release_jp' => Carbon::parse(strtotime($return->release_jp))->format('Y-m-d'),
+                    'release_us' => Carbon::parse(strtotime($return->release_us))->format('Y-m-d'),
+                    'release_br' => Carbon::parse(strtotime($return->release_br))->format('Y-m-d'),
                     'media_type' => $return->media_type,
                 ]
             );
@@ -106,6 +110,7 @@ class Platform extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws ReflectionException
      */
     public function showPlatform()
     {
@@ -122,9 +127,9 @@ class Platform extends Controller
                     'name' => $return->name,
                     'developer' => $return->developer,
                     'generation' => $return->generation,
-                    'release_jp' => date('Y-m-d', strtotime($return->release_jp)),
-                    'release_us' => date('Y-m-d', strtotime($return->release_us)),
-                    'release_br' => date('Y-m-d', strtotime($return->release_br)),
+                    'release_jp' => Carbon::parse(strtotime($return->release_jp))->format('d/m/Y'),
+                    'release_us' => Carbon::parse(strtotime($return->release_us))->format('d/m/Y'),
+                    'release_br' => Carbon::parse(strtotime($return->release_br))->format('d/m/Y'),
                     'media_type' => $return->media_type,
                 ]
             );
@@ -138,6 +143,7 @@ class Platform extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws ReflectionException
      */
     public function showPlatforms()
     {
@@ -151,6 +157,12 @@ class Platform extends Controller
         Session::delete('error_detail');
 
         if ($return) {
+            foreach ($return as $item) {
+                $item->release_jp = Carbon::parse(strtotime($item->release_jp))->format('d/m/Y');
+                $item->release_us = Carbon::parse(strtotime($item->release_us))->format('d/m/Y');
+                $item->release_br = Carbon::parse(strtotime($item->release_br))->format('d/m/Y');
+            }
+
             return $this->view->render(
                 $this->getResponse(),
                 '@site/logged/crud/platform/showPlatforms.twig',
@@ -168,6 +180,7 @@ class Platform extends Controller
 
     /**
      * @return ResponseInterface
+     * @throws Throwable
      */
     public function insert()
     {
@@ -182,11 +195,12 @@ class Platform extends Controller
         }
 
         Session::set('status', false);
-        return $this->getResponse()->withHeader('Location', '/');
+        return $this->getResponse()->withHeader('Location', '/show/platform/all');
     }
 
     /**
      * @return ResponseInterface
+     * @throws Throwable
      */
     public function update()
     {
@@ -200,11 +214,13 @@ class Platform extends Controller
             return $this->getResponse()->withHeader('Location', '/show/platform/all');
         }
 
-        return $this->getResponse()->withHeader('Location', '/');
+        Session::set('status', false);
+        return $this->getResponse()->withHeader('Location', '/show/platform/all');
     }
 
     /**
      * @return ResponseInterface
+     * @throws Throwable
      */
     public function delete()
     {

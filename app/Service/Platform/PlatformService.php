@@ -6,6 +6,7 @@ use App\Entity\Platform\PlatformEntity;
 use App\Helpers\Session;
 use App\Repository\Platform\PlatformRepository;
 use App\Service\Service;
+use Carbon\Carbon;
 use Exception;
 use ReflectionException;
 use Throwable;
@@ -23,6 +24,30 @@ class PlatformService extends Service
      */
     public function insert($params)
     {
+        if (!$params['name'] ||
+            !$params['developer'] ||
+            !$params['generation'] ||
+            !$params['release_jp'] ||
+            !$params['release_us'] ||
+            !$params['release_br'] ||
+            !$params['media_type']
+        ) {
+            return false;
+        }
+
+        // Create a function to avoid code repetion
+        if (Carbon::parse($params['release_jp'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            return false;
+        }
+
+        if (Carbon::parse($params['release_us'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            return false;
+        }
+
+        if (Carbon::parse($params['release_br'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            return false;
+        }
+
         $this->beginTransaction();
 
         try {
@@ -54,6 +79,30 @@ class PlatformService extends Service
      */
     public function update($params)
     {
+        if (!$params['name'] ||
+            !$params['developer'] ||
+            !$params['generation'] ||
+            !$params['release_jp'] ||
+            !$params['release_us'] ||
+            !$params['release_br'] ||
+            !$params['media_type']
+        ) {
+            return false;
+        }
+
+        // Create a function to avoid code repetion
+        if (Carbon::parse($params['release_jp'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            return false;
+        }
+
+        if (Carbon::parse($params['release_us'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            return false;
+        }
+
+        if (Carbon::parse($params['release_br'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+            return false;
+        }
+
         $this->beginTransaction();
 
         try {

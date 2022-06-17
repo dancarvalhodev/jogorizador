@@ -6,9 +6,12 @@ use App\Helpers\Session;
 use App\Http\Controller;
 use App\Service\Platform\PlatformService;
 use App\Service\Rom\RomService;
+use Carbon\Carbon;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface;
+use ReflectionException;
 use Slim\Views\Twig;
+use Throwable;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
 use Twig\Error\SyntaxError;
@@ -45,6 +48,7 @@ class Rom extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws ReflectionException
      */
     public function insertForm()
     {
@@ -87,6 +91,7 @@ class Rom extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws ReflectionException
      */
     public function updateForm()
     {
@@ -102,12 +107,12 @@ class Rom extends Controller
                 [
                     'data' => $platformData,
                     'id' => $return->id,
-                    'name' => $return->name,
+                    'name' => $return->rom_name,
                     'platform' => $return->platform_id,
                     'developer' => $return->developer,
                     'publisher' => $return->publisher,
                     'series' => $return->series,
-                    'release' => date('Y-m-d', strtotime($return->release)),
+                    'release' => Carbon::parse(strtotime($return->release))->format('Y-m-d'),
                     'mode' => $return->mode,
                 ]
             );
@@ -121,6 +126,7 @@ class Rom extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws ReflectionException
      */
     public function showRom()
     {
@@ -134,12 +140,12 @@ class Rom extends Controller
                 '@site/logged/crud/rom/showRom.twig',
                 [
                     'id' => $return->id,
-                    'name' => $return->name,
-                    'platform' => $return->platform_id,
+                    'name' => $return->rom_name,
+                    'platform' => $return->platform_name,
                     'developer' => $return->developer,
                     'publisher' => $return->publisher,
                     'series' => $return->series,
-                    'release' => date('Y-m-d', strtotime($return->release)),
+                    'release' => Carbon::parse(strtotime($return->release))->format('d/m/Y'),
                     'mode' => $return->mode,
                 ]
             );
@@ -153,6 +159,7 @@ class Rom extends Controller
      * @throws LoaderError
      * @throws RuntimeError
      * @throws SyntaxError
+     * @throws ReflectionException
      */
     public function showRoms()
     {
@@ -166,6 +173,10 @@ class Rom extends Controller
         Session::delete('error_detail');
 
         if ($return) {
+            foreach ($return as $item) {
+                $item->release = Carbon::parse(strtotime($item->release))->format('d/m/Y');
+            }
+
             return $this->view->render(
                 $this->getResponse(),
                 '@site/logged/crud/rom/showRoms.twig',
@@ -183,6 +194,7 @@ class Rom extends Controller
 
     /**
      * @return ResponseInterface
+     * @throws Throwable
      */
     public function insert()
     {
@@ -203,6 +215,7 @@ class Rom extends Controller
 
     /**
      * @return ResponseInterface
+     * @throws Throwable
      */
     public function update()
     {
@@ -222,6 +235,7 @@ class Rom extends Controller
 
     /**
      * @return ResponseInterface
+     * @throws Throwable
      */
     public function delete()
     {

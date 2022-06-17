@@ -40,17 +40,17 @@
                     <tbody>
                     {% for item in data %}
                         <tr class="bg-white border-b dark:bg-gray-800 dark:border-gray-700">
-                            <td class="px-6 py-4">{{ item.platform_id }}</td>
-                            <td class="px-6 py-4"><strong>{{ item.name }}</strong></td>
+                            <td class="px-6 py-4"><strong>{{ item.platform_name }}</strong></td>
+                            <td class="px-6 py-4"><strong>{{ item.rom_name }}</strong></td>
                             <td class="px-6 py-4">{{ item.developer }}</td>
                             <td class="px-6 py-4">{{ item.publisher }}</td>
                             <td class="px-6 py-4">{{ item.series }}</td>
                             <td class="px-6 py-4">{{ item.mode }}</td>
                             <td class="px-6 py-4">{{ item.release }}</td>
                             <td class="px-6 py-4">
-                                <a href="/update/rom/{{ item.id }}"><i class="fa-solid fa-pen pr-2"></i></a>
-                                <a href="/delete/rom/{{ item.id }}"><i class="fa-solid fa-trash-can pr-2"></i></a>
-                                <a href="/show/rom/{{ item.id }}"><i class="fa-solid fa-eye pr-2"></i></a>
+                                <div class="p-2"><a href="/update/rom/{{ item.id }}"><i class="fa-solid fa-pen pr-2"></i></a></div>
+                                <div class="p-2"><a href="/delete/rom/{{ item.id }}"><i class="fa-solid fa-trash-can pr-2"></i></a></div>
+                                <div class="p-2"><a href="/show/rom/{{ item.id }}"><i class="fa-solid fa-eye pr-2"></i></a></div>
                             </td>
                         </tr>
                     {% endfor %}
