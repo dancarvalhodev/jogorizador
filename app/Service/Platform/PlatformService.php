@@ -6,10 +6,21 @@ use App\Entity\Platform\PlatformEntity;
 use App\Helpers\Session;
 use App\Repository\Platform\PlatformRepository;
 use App\Service\Service;
+use Exception;
+use ReflectionException;
+use Throwable;
 
+/**
+ * Class PlatformService
+ * @package App\Service\Platform
+ */
 class PlatformService extends Service
 {
-
+    /**
+     * @param $params
+     * @return bool
+     * @throws Throwable
+     */
     public function insert($params)
     {
         $this->beginTransaction();
@@ -29,13 +40,18 @@ class PlatformService extends Service
             $this->commit();
 
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             error_log($e);
             $this->rollBack();
             return false;
         }
     }
 
+    /**
+     * @param $params
+     * @return bool
+     * @throws Throwable
+     */
     public function update($params)
     {
         $this->beginTransaction();
@@ -55,13 +71,18 @@ class PlatformService extends Service
             $this->commit();
 
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             error_log($e);
             $this->rollBack();
             return false;
         }
     }
 
+    /**
+     * @param $params
+     * @return bool
+     * @throws Throwable
+     */
     public function delete($params)
     {
         if ($params['confirm'] === 'No') {
@@ -75,7 +96,7 @@ class PlatformService extends Service
             $this->commit();
 
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             //error_log($e);
             Session::set('error_detail', $e->getMessage());
             $this->rollBack();
@@ -83,39 +104,58 @@ class PlatformService extends Service
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * @throws ReflectionException
+     * @throws Exception
+     */
     public function getFromId($id)
     {
         $data = $this->getRepository()->getFromId($id);
 
         if (!$data) {
-            throw new \Exception();
+            throw new Exception();
         }
 
         return $data;
     }
 
+    /**
+     * @return mixed
+     * @throws ReflectionException
+     * @throws Exception
+     */
     public function getAll()
     {
         $data = $this->getRepository()->getAll();
 
         if (!$data) {
-            throw new \Exception();
+            throw new Exception();
         }
 
         return $data;
     }
 
+    /**
+     * @return mixed
+     * @throws ReflectionException
+     * @throws Exception
+     */
     public function getNameAll()
     {
         $data = $this->getRepository()->getNameAll();
 
         if (!$data) {
-            throw new \Exception();
+            throw new Exception();
         }
 
         return $data;
     }
 
+    /**
+     * @return string
+     */
     protected function getRepositoryClass(): string
     {
         return PlatformRepository::class;

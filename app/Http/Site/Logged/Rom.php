@@ -7,8 +7,16 @@ use App\Http\Controller;
 use App\Service\Platform\PlatformService;
 use App\Service\Rom\RomService;
 use DI\Annotation\Inject;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
+/**
+ * Class Rom
+ * @package App\Http\Site\Logged
+ */
 class Rom extends Controller
 {
     /**
@@ -32,6 +40,12 @@ class Rom extends Controller
      */
     private PlatformService $platformService;
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function insertForm()
     {
         $platformData = $this->platformService->getNameAll();
@@ -45,6 +59,12 @@ class Rom extends Controller
         );
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function deleteForm()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -62,6 +82,12 @@ class Rom extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function updateForm()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -90,6 +116,12 @@ class Rom extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function showRom()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -116,6 +148,12 @@ class Rom extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function showRoms()
     {
         $return = $this->romService->getAll();
@@ -143,6 +181,9 @@ class Rom extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     */
     public function insert()
     {
         $params = $this->getRequest()->getParsedBody();
@@ -160,6 +201,9 @@ class Rom extends Controller
 
     }
 
+    /**
+     * @return ResponseInterface
+     */
     public function update()
     {
         $params = $this->getRequest()->getParsedBody();
@@ -176,6 +220,9 @@ class Rom extends Controller
         return $this->getResponse()->withHeader('Location', '/show/rom/all');
     }
 
+    /**
+     * @return ResponseInterface
+     */
     public function delete()
     {
         $params = $this->getRequest()->getParsedBody();

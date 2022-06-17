@@ -5,9 +5,21 @@ namespace App\Service\Rom;
 use App\Entity\Rom\RomEntity;
 use App\Repository\Rom\RomRepository;
 use App\Service\Service;
+use Exception;
+use ReflectionException;
+use Throwable;
 
+/**
+ * Class RomService
+ * @package App\Service\Rom
+ */
 class RomService extends Service
 {
+    /**
+     * @param $params
+     * @return bool
+     * @throws Throwable
+     */
     public function insert($params)
     {
         $this->beginTransaction();
@@ -27,13 +39,18 @@ class RomService extends Service
             $this->commit();
 
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             error_log($e);
             $this->rollBack();
             return false;
         }
     }
 
+    /**
+     * @param $params
+     * @return bool
+     * @throws Throwable
+     */
     public function update($params)
     {
         $this->beginTransaction();
@@ -53,13 +70,18 @@ class RomService extends Service
             $this->commit();
 
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             error_log($e);
             $this->rollBack();
             return false;
         }
     }
 
+    /**
+     * @param $params
+     * @return bool
+     * @throws Throwable
+     */
     public function delete($params)
     {
         if ($params['confirm'] === 'No') {
@@ -73,35 +95,49 @@ class RomService extends Service
             $this->commit();
 
             return true;
-        } catch (\Throwable $e) {
+        } catch (Throwable $e) {
             error_log($e);
             $this->rollBack();
             return false;
         }
     }
 
+    /**
+     * @param $id
+     * @return mixed
+     * @throws ReflectionException
+     * @throws Exception
+     */
     public function getFromId($id)
     {
         $data = $this->getRepository()->getFromId($id);
 
         if (!$data) {
-            throw new \Exception();
+            throw new Exception();
         }
 
         return $data;
     }
 
+    /**
+     * @return mixed
+     * @throws ReflectionException
+     * @throws Exception
+     */
     public function getAll()
     {
         $data = $this->getRepository()->getAll();
 
         if (!$data) {
-            throw new \Exception();
+            throw new Exception();
         }
 
         return $data;
     }
 
+    /**
+     * @return string
+     */
     protected function getRepositoryClass(): string
     {
         return RomRepository::class;

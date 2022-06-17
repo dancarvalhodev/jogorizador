@@ -6,8 +6,16 @@ use App\Helpers\Session;
 use App\Http\Controller;
 use App\Service\Platform\PlatformService;
 use DI\Annotation\Inject;
+use Psr\Http\Message\ResponseInterface;
 use Slim\Views\Twig;
+use Twig\Error\LoaderError;
+use Twig\Error\RuntimeError;
+use Twig\Error\SyntaxError;
 
+/**
+ * Class Platform
+ * @package App\Http\Site\Logged
+ */
 class Platform extends Controller
 {
     /**
@@ -24,6 +32,12 @@ class Platform extends Controller
      */
     private PlatformService $platformService;
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function insertForm()
     {
         return $this->view->render(
@@ -32,6 +46,12 @@ class Platform extends Controller
         );
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function deleteForm()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -49,6 +69,12 @@ class Platform extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function updateForm()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -75,6 +101,12 @@ class Platform extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function showPlatform()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -101,6 +133,12 @@ class Platform extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function showPlatforms()
     {
         $return = $this->platformService->getAll();
@@ -128,6 +166,9 @@ class Platform extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     */
     public function insert()
     {
         $params = $this->getRequest()->getParsedBody();
@@ -144,6 +185,9 @@ class Platform extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     */
     public function update()
     {
         $params = $this->getRequest()->getParsedBody();
@@ -159,6 +203,9 @@ class Platform extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
+    /**
+     * @return ResponseInterface
+     */
     public function delete()
     {
         $params = $this->getRequest()->getParsedBody();
