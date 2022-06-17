@@ -35,16 +35,9 @@ class PlatformService extends Service
             return false;
         }
 
-        // Create a function to avoid code repetion
-        if (Carbon::parse($params['release_jp'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
-            return false;
-        }
+        $release_dates = [$params['release_jp'], $params['release_us'], $params['release_br']];
 
-        if (Carbon::parse($params['release_us'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
-            return false;
-        }
-
-        if (Carbon::parse($params['release_br'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+        if (!$this->validateDates($release_dates)) {
             return false;
         }
 
@@ -52,15 +45,7 @@ class PlatformService extends Service
 
         try {
             $platform = new PlatformEntity();
-
-            $platform->name = $params['name'];
-            $platform->developer = $params['developer'];
-            $platform->generation = $params['generation'];
-            $platform->release_jp = $params['release_jp'];
-            $platform->release_us = $params['release_us'];
-            $platform->release_br = $params['release_br'];
-            $platform->media_type = $params['media_type'];
-
+            $this->setPlatformAttributes($platform, $params);
             $platform->save();
             $this->commit();
 
@@ -72,6 +57,8 @@ class PlatformService extends Service
         }
     }
 
+
+
     /**
      * @param $params
      * @return bool
@@ -79,7 +66,8 @@ class PlatformService extends Service
      */
     public function update($params)
     {
-        if (!$params['name'] ||
+        if (!$params['id'] ||
+            !$params['name'] ||
             !$params['developer'] ||
             !$params['generation'] ||
             !$params['release_jp'] ||
@@ -90,16 +78,9 @@ class PlatformService extends Service
             return false;
         }
 
-        // Create a function to avoid code repetion
-        if (Carbon::parse($params['release_jp'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
-            return false;
-        }
+        $release_dates = [$params['release_jp'], $params['release_us'], $params['release_br']];
 
-        if (Carbon::parse($params['release_us'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
-            return false;
-        }
-
-        if (Carbon::parse($params['release_br'])->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+        if (!$this->validateDates($release_dates)) {
             return false;
         }
 
@@ -107,15 +88,7 @@ class PlatformService extends Service
 
         try {
             $platform = $this->getFromId($params['id']);
-
-            $platform->name = $params['name'];
-            $platform->developer = $params['developer'];
-            $platform->generation = $params['generation'];
-            $platform->release_jp = $params['release_jp'];
-            $platform->release_us = $params['release_us'];
-            $platform->release_br = $params['release_br'];
-            $platform->media_type = $params['media_type'];
-
+            $this->setPlatformAttributes($platform, $params);
             $platform->save();
             $this->commit();
 
@@ -200,6 +173,34 @@ class PlatformService extends Service
         }
 
         return $data;
+    }
+
+    /**
+     * @param $platform
+     * @param $params
+     */
+    private function setPlatformAttributes($platform, $params) {
+        $platform->name = $params['name'];
+        $platform->developer = $params['developer'];
+        $platform->generation = $params['generation'];
+        $platform->release_jp = $params['release_jp'];
+        $platform->release_us = $params['release_us'];
+        $platform->release_br = $params['release_br'];
+        $platform->media_type = $params['media_type'];
+    }
+
+    /**
+     * @param array $dates
+     * @return bool
+     */
+    private function validateDates(Array $dates) {
+        foreach ($dates as $date) {
+            if (Carbon::parse($date)->format('Y-m-d') > Carbon::now()->format('Y-m-d')) {
+                return false;
+            }
+        }
+
+        return true;
     }
 
     /**

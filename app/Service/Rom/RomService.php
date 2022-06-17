@@ -42,15 +42,7 @@ class RomService extends Service
 
         try {
             $rom = new RomEntity();
-
-            $rom->name = $params['name'];
-            $rom->platform_id = (int)$params['platforms'];
-            $rom->developer = $params['developer'];
-            $rom->publisher = $params['publisher'];
-            $rom->series = $params['series'];
-            $rom->release = $params['release'];
-            $rom->mode = $params['mode'];
-
+            $this->setRomAttributes($rom, $params);
             $rom->save();
             $this->commit();
 
@@ -85,15 +77,7 @@ class RomService extends Service
 
         try {
             $rom = $this->getFromId($params['id']);
-
-            $rom->name = $params['name'];
-            $rom->platform_id = $params['platforms'];
-            $rom->developer = $params['developer'];
-            $rom->publisher = $params['publisher'];
-            $rom->series = $params['series'];
-            $rom->release = $params['release'];
-            $rom->mode = $params['mode'];
-
+            $this->setRomAttributes($rom, $params);
             $rom->save();
             $this->commit();
 
@@ -161,6 +145,20 @@ class RomService extends Service
         }
 
         return $data;
+    }
+
+    /**
+     * @param $rom
+     * @param $params
+     */
+    private function setRomAttributes($rom, $params) {
+        $rom->name = $params['name'];
+        $rom->platform_id = (int)$params['platforms'];
+        $rom->developer = $params['developer'];
+        $rom->publisher = $params['publisher'];
+        $rom->series = $params['series'];
+        $rom->release = $params['release'];
+        $rom->mode = $params['mode'];
     }
 
     /**
