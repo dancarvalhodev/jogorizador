@@ -32,6 +32,23 @@ class Platform extends Controller
         );
     }
 
+    public function deleteForm()
+    {
+        $id = (int)$this->getRequest()->getAttribute('id') ?? null;
+
+        if ($id) {
+            return $this->view->render(
+                $this->getResponse(),
+                '@site/logged/crud/platform/deleteForm.twig',
+                [
+                    'id' => $id,
+                ]
+            );
+        }
+
+        return $this->getResponse()->withHeader('Location', '/');
+    }
+
     public function updateForm()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -108,24 +125,6 @@ class Platform extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
-    public function deletePlatform()
-    {
-        $id = (int)$this->getRequest()->getAttribute('id') ?? null;
-
-        if ($id) {
-            $return = $this->platformService->delete($id);
-
-            if ($return) {
-                echo 'Deleted';
-                exit;
-            }
-
-            return $this->getResponse()->withHeader('Location', '/');
-        }
-
-        return $this->getResponse()->withHeader('Location', '/');
-    }
-
     public function insert()
     {
         $params = $this->getRequest()->getParsedBody();
@@ -155,5 +154,21 @@ class Platform extends Controller
         }
 
         return $this->getResponse()->withHeader('Location', '/');
+    }
+
+    public function delete()
+    {
+        $params = $this->getRequest()->getParsedBody();
+        $return = $this->platformService->delete($params);
+
+        Session::set('type', ['Deleted', 'delete']);
+
+        if ($return) {
+            Session::set('status', true);
+            return $this->getResponse()->withHeader('Location', '/show/platform/all');
+        }
+
+        Session::set('status', false);
+        return $this->getResponse()->withHeader('Location', '/show/platform/all');
     }
 }

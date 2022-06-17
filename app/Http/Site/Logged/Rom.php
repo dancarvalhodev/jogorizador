@@ -45,6 +45,23 @@ class Rom extends Controller
         );
     }
 
+    public function deleteForm()
+    {
+        $id = (int)$this->getRequest()->getAttribute('id') ?? null;
+
+        if ($id) {
+            return $this->view->render(
+                $this->getResponse(),
+                '@site/logged/crud/rom/deleteForm.twig',
+                [
+                    'id' => $id,
+                ]
+            );
+        }
+
+        return $this->getResponse()->withHeader('Location', '/');
+    }
+
     public function updateForm()
     {
         $id = (int)$this->getRequest()->getAttribute('id') ?? null;
@@ -123,25 +140,6 @@ class Rom extends Controller
         return $this->getResponse()->withHeader('Location', '/');
     }
 
-    public function deleteRom()
-    {
-        $id = (int)$this->getRequest()->getAttribute('id') ?? null;
-
-        if ($id) {
-            $return = $this->romService->delete($id);
-
-            if ($return) {
-                echo 'Deleted';
-
-                exit;
-            }
-
-            return $this->getResponse()->withHeader('Location', '/');
-        }
-
-        return $this->getResponse()->withHeader('Location', '/');
-    }
-
     public function insert()
     {
         $params = $this->getRequest()->getParsedBody();
@@ -155,7 +153,7 @@ class Rom extends Controller
         }
 
         Session::set('status', false);
-        return $this->getResponse()->withHeader('Location', '/');
+        return $this->getResponse()->withHeader('Location', '/show/rom/all');
 
     }
 
@@ -171,8 +169,23 @@ class Rom extends Controller
             return $this->getResponse()->withHeader('Location', '/show/rom/all');
         }
 
+        Session::set('status', false);
+        return $this->getResponse()->withHeader('Location', '/show/rom/all');
+    }
+
+    public function delete()
+    {
+        $params = $this->getRequest()->getParsedBody();
+        $return = $this->romService->delete($params);
+
+        Session::set('type', ['Deleted', 'delete']);
+
+        if ($return) {
+            Session::set('status', true);
+            return $this->getResponse()->withHeader('Location', '/show/rom/all');
+        }
 
         Session::set('status', false);
-        return $this->getResponse()->withHeader('Location', '/');
+        return $this->getResponse()->withHeader('Location', '/show/rom/all');
     }
 }

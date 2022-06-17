@@ -61,12 +61,16 @@ class PlatformService extends Service
         }
     }
 
-    public function delete($id)
+    public function delete($params)
     {
+        if ($params['confirm'] === 'No') {
+            return false;
+        }
+
         $this->beginTransaction();
 
         try {
-            $this->getFromId($id)->delete();
+            $this->getFromId($params['id'])->delete();
             $this->commit();
 
             return true;

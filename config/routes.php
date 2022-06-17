@@ -52,7 +52,7 @@ return function (App $app) {
     $app->get(
         '/delete/rom[/{id:[0-9]+}]',
         Rom::class
-    )->setArgument('action', 'deleteRom');
+    )->setArgument('action', 'deleteForm');
 
     // POST
     $app->post(
@@ -64,6 +64,11 @@ return function (App $app) {
         '/crud/update/rom',
         Rom::class
     )->setArgument('action', 'update');
+
+    $app->post(
+        '/crud/delete/rom',
+        Rom::class
+    )->setArgument('action', 'delete');
 
     // ---------------------------------------------------------------------------
     // CRUD PLATFORMS
@@ -91,7 +96,7 @@ return function (App $app) {
     $app->get(
         '/delete/platform[/{id:[0-9]+}]',
         Platform::class
-    )->setArgument('action', 'deletePlatform');
+    )->setArgument('action', 'deleteForm');
 
     // POST
     $app->post(
@@ -103,4 +108,9 @@ return function (App $app) {
         '/crud/update/platform',
         Platform::class
     )->setArgument('action', 'update');
+
+    $app->post(
+        '/crud/delete/platform',
+        Platform::class
+    )->setArgument('action', 'delete');
 };
