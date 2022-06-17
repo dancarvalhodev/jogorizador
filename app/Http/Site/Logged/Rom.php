@@ -132,6 +132,7 @@ class Rom extends Controller
 
             if ($return) {
                 echo 'Deleted';
+
                 exit;
             }
 
