@@ -3,6 +3,7 @@
 namespace App\Service\Platform;
 
 use App\Entity\Platform\PlatformEntity;
+use App\Helpers\Session;
 use App\Repository\Platform\PlatformRepository;
 use App\Service\Service;
 
@@ -75,7 +76,8 @@ class PlatformService extends Service
 
             return true;
         } catch (\Throwable $e) {
-            error_log($e);
+            //error_log($e);
+            Session::set('error_detail', $e->getMessage());
             $this->rollBack();
             return false;
         }

@@ -1,5 +1,16 @@
 {% extends "@site/layout/main.twig" %}
 {% block content %}
     {% include "@site/layout/menu.twig" %}
-    INDEX
+    <div class="flex pt-8">
+        <div class="w-full text-center px-8">
+            <h1 class="text-4xl">Welcome to Jogorizator</h1>
+            <h4 class="mt-2 text-xl">Your game roms and platform catalog</h4>
+            <div class="text-center mb-6 mt-6">
+                <a class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" href="/insert/rom">Add Rom</a>
+            </div>
+            <div class="text-center mb-6">
+                <a class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" href="/insert/platform">Add Platform</a>
+            </div>
+        </div>
+    </div>
 {% endblock %}

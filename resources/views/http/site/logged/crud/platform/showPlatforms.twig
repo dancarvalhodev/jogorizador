@@ -9,12 +9,17 @@
         </div>
         {% if status %}
             <div class="mt-6 mb-6 p-8 bg-green-200 text-center rounded">
-                Platform {{ type.0 }} successfully
+                {{ type.0 }}
             </div>
         {% endif %}
         {% if not status is same as (NULL) and status is same as (false) %}
             <div class="mt-6 mb-6 p-8 bg-red-200 text-center rounded">
-                Failed to {{ type.1 }} Platform
+                {% if not error is same as (NULL)%}
+                    {{ error }}
+                    <br>
+                {% endif %}
+
+                {{ type.1 }}
             </div>
         {% endif %}
         <div class="relative overflow-x-auto shadow-md sm:rounded-lg">

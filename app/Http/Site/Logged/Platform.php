@@ -106,9 +106,11 @@ class Platform extends Controller
         $return = $this->platformService->getAll();
         $status = Session::get('status');
         $type = Session::get('type');
+        $errorDetail = Session::get('error_detail');
 
         Session::delete('status');
         Session::delete('type');
+        Session::delete('error_detail');
 
         if ($return) {
             return $this->view->render(
@@ -117,7 +119,8 @@ class Platform extends Controller
                 [
                     'data' => $return,
                     'status' => $status,
-                    'type' => $type
+                    'type' => $type,
+                    'error' => $errorDetail
                 ]
             );
         }
@@ -130,7 +133,7 @@ class Platform extends Controller
         $params = $this->getRequest()->getParsedBody();
         $return = $this->platformService->insert($params);
 
-        Session::set('type', ['Inserted', 'insert']);
+        Session::set('type', ['Platform Inserted successfully', 'Failed to insert Platform']);
 
         if ($return) {
             Session::set('status', true);
@@ -146,7 +149,7 @@ class Platform extends Controller
         $params = $this->getRequest()->getParsedBody();
         $return = $this->platformService->update($params);
 
-        Session::set('type', ['Updated', 'update']);
+        Session::set('type', ['Platform Updated successfully', 'Failed to update Platform']);
 
         if ($return) {
             Session::set('status', true);
@@ -161,7 +164,7 @@ class Platform extends Controller
         $params = $this->getRequest()->getParsedBody();
         $return = $this->platformService->delete($params);
 
-        Session::set('type', ['Deleted', 'delete']);
+        Session::set('type', ['Platform Deleted successfully', 'Failed to delete platform or operation canceled by user']);
 
         if ($return) {
             Session::set('status', true);

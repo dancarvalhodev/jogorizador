@@ -121,9 +121,11 @@ class Rom extends Controller
         $return = $this->romService->getAll();
         $status = Session::get('status');
         $type = Session::get('type');
+        $errorDetail = Session::get('error_detail');
 
         Session::delete('status');
         Session::delete('type');
+        Session::delete('error_detail');
 
         if ($return) {
             return $this->view->render(
@@ -132,7 +134,8 @@ class Rom extends Controller
                 [
                     'data' => $return,
                     'status' => $status,
-                    'type' => $type
+                    'type' => $type,
+                    'error' => $errorDetail
                 ]
             );
         }
@@ -145,7 +148,7 @@ class Rom extends Controller
         $params = $this->getRequest()->getParsedBody();
         $return = $this->romService->insert($params);
 
-        Session::set('type', ['Inserted', 'insert']);
+        Session::set('type', ['Rom Inserted successfully', 'Failed to insert Rom']);
 
         if ($return) {
             Session::set('status', true);
@@ -162,7 +165,7 @@ class Rom extends Controller
         $params = $this->getRequest()->getParsedBody();
         $return = $this->romService->update($params);
 
-        Session::set('type', ['Updated', 'update']);
+        Session::set('type', ['Rom Updated successfully', 'Failed to update Rom']);
 
         if ($return) {
             Session::set('status', true);
@@ -178,7 +181,7 @@ class Rom extends Controller
         $params = $this->getRequest()->getParsedBody();
         $return = $this->romService->delete($params);
 
-        Session::set('type', ['Deleted', 'delete']);
+        Session::set('type', ['Rom Deleted successfully', 'Failed to delete rom or operation canceled by user']);
 
         if ($return) {
             Session::set('status', true);

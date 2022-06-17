@@ -2,24 +2,21 @@
     <nav class="relative flex items-center justify-between sm:h-10 lg:justify-start" aria-label="Global">
         <div class="flex items-center flex-grow flex-shrink-0 lg:flex-grow-0">
             <div class="flex items-center justify-between w-full md:w-auto">
-                <a href="#">
+                <a href="/">
                     Jogorizator
                 </a>
-{#                <div class="-mr-2 flex items-center md:hidden">#}
-{#                    <button type="button" class="bg-white rounded-md p-2 inline-flex items-center justify-center text-gray-400 hover:text-gray-500 hover:bg-gray-100 focus:outline-none focus:ring-2 focus:ring-inset focus:ring-green-500" aria-expanded="false">#}
-{#                        <span class="sr-only">Open main menu</span>#}
-{#                        <!-- Heroicon name: outline/menu -->#}
-{#                        <svg class="h-6 w-6" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">#}
-{#                            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 6h16M4 12h16M4 18h16" />#}
-{#                        </svg>#}
-{#                    </button>#}
-{#                </div>#}
+                <div class="-mr-2 flex items-center md:hidden">
+                    <button type="button" class="menuBtn rounded-md p-2 inline-flex items-center justify-center text-white hover:text-white focus:outline-none pr-4" aria-expanded="false">
+                        <span class="sr-only">Open main menu</span>
+                        <i class="fa-solid fa-bars"></i>
+                    </button>
+                </div>
             </div>
         </div>
-        <div class="hidden md:block md:ml-10 md:pr-4 md:space-x-8">
-            <a href="/" class="font-medium ">Home</a>
-            <a href="/show/rom/all" class="font-medium ">Roms</a>
-            <a href="/show/platform/all" class="font-medium ">Platforms</a>
+        <div class="menu hidden md:block md:ml-10 md:pr-4 md:space-x-8">
+            <a href="/" class="font-medium mr-2">Home</a>
+            <a href="/show/rom/all" class="font-medium mr-2">Roms</a>
+            <a href="/show/platform/all" class="font-medium mr-2">Platforms</a>
         </div>
     </nav>
 </div>
