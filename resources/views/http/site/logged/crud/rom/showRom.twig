@@ -1,0 +1,21 @@
+{% extends "@site/layout/main.twig" %}
+{% block content %}
+    {% include "@site/layout/menu.twig" %}
+<div class="flex pt-8">
+    <div class="w-full px-8">
+        <h1 class="text-center pb-6">Details of {{ name }} Rom</h1>
+        <div class="text-center">
+            <p>Platform: {{ platform }}</p>
+            <p>Name: {{ name }}</p>
+            <p>Developer: {{ developer }}</p>
+            <p>Publisher: {{ publisher }}</p>
+            <P>Series: {{ series }}</P>
+            <p>Mode: {{ mode }}</p>
+            <p>Release: {{ release }}</p>
+        </div>
+        <div class="text-center mt-6">
+            <a class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" href="/show/rom/all">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}

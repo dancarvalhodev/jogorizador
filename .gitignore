@@ -1,0 +1,10 @@
+#folders
+/.idea/
+/vendor/
+/storage/logs/
+/storage/twig/
+
+#files
+composer.lock
+/config/development.php
+

@@ -1,0 +1,21 @@
+{% extends "@site/layout/main.twig" %}
+{% block content %}
+    {% include "@site/layout/menu.twig" %}
+<div class="flex pt-8">
+    <div class="w-full px-8">
+        <h1 class="text-center pb-6">Details of {{ name }} Platform</h1>
+        <div class="text-center">
+            <p>Name: {{ name }}</p>
+            <p>Developer: {{ developer }}</p>
+            <p>Generation: {{ generation }}</p>
+            <p>Release Japan: {{ release_jp }}</p>
+            <p>Release EUA: {{ release_us }}</p>
+            <p>Release Brazil: {{ release_br }}</p>
+            <p>Media Type: {{ media_type }}</p>
+        </div>
+        <div class="text-center mt-6">
+            <a class="shadow bg-purple-500 hover:bg-purple-400 focus:shadow-outline focus:outline-none text-white font-bold py-2 px-4 rounded" href="/show/platform/all">Back</a>
+        </div>
+    </div>
+</div>
+{% endblock %}
