@@ -7,6 +7,7 @@ use App\Repository\Rom\RomRepository;
 use App\Service\Service;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use ReflectionException;
 use Throwable;
 
@@ -145,6 +146,28 @@ class RomService extends Service
         }
 
         return $data;
+    }
+
+    /**
+     * @param $name
+     * @return array
+     * @throws ReflectionException
+     * @throws Exception
+     */
+    public function getByName($name): array
+    {
+        $data = $this->getRepository()->getByName($name);
+        $dataArray = [];
+
+        if (!$data) {
+            throw new Exception();
+        }
+
+        foreach ($data as $item) {
+            $dataArray[] = Collection::make($item);
+        }
+
+        return $dataArray;
     }
 
     /**

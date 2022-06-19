@@ -1,6 +1,7 @@
 <?php
 
 use App\Http\Api\v1\Consult\ConsultPlatform;
+use App\Http\Api\v1\Consult\ConsultRom;
 use App\Http\Site\Logged\Platform;
 use App\Http\Site\Logged\Rom;
 use App\Http\Site\Logged\Home;
@@ -116,5 +117,10 @@ return function (App $app) {
     $app->any(
         '/api/v{version:[1]{1}}/platform',
         ConsultPlatform::class
+    )->setArgument('action', 'get');
+
+    $app->any(
+        '/api/v{version:[1]{1}}/rom',
+        ConsultRom::class
     )->setArgument('action', 'get');
 };
