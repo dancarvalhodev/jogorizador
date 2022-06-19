@@ -17,11 +17,14 @@ class PlatformPayload implements PayloadInterface
     {
         $this->platform = $platform;
     }
+
     /**
      * @inheritDoc
      */
     public function toArray(): array
     {
-        // TODO: Implement toArray() method.
+        return [
+            $this->platform
+        ];
     }
 }

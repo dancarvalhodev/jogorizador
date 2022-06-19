@@ -4,6 +4,7 @@ namespace App\Http\Api\v1\Consult;
 
 use App\Http\Controller;
 use App\Payload\CollectionPayload;
+use App\Payload\Consult\PlatformPayload;
 use App\Service\Platform\PlatformService;
 use DI\Annotation\Inject;
 use Exception;
@@ -37,15 +38,10 @@ class ConsultPlatform extends Controller
             throw new HttpBadRequestException($this->getRequest());
         }
 
-        // Database consult
-        $platform = $this->platformService->getByName($params['name']);
-        exit;
-
-        $response = new Collection();
-        $response->add($platform);
+        $platform = new Collection($this->platformService->getByName($params['name']));
 
         return $this->respondWithPayload(
-            new CollectionPayload($response,PlatformPayload::class)
+            new CollectionPayload($platform,PlatformPayload::class)
         );
     }
 }

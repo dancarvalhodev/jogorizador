@@ -8,6 +8,7 @@ use App\Repository\Platform\PlatformRepository;
 use App\Service\Service;
 use Carbon\Carbon;
 use Exception;
+use Illuminate\Database\Eloquent\Collection;
 use ReflectionException;
 use Throwable;
 
@@ -159,19 +160,24 @@ class PlatformService extends Service
 
     /**
      * @param $name
-     * @return mixed
+     * @return array
      * @throws ReflectionException
      * @throws Exception
      */
     public function getByName($name)
     {
         $data = $this->getRepository()->getByName($name);
+        $dataArray = [];
 
         if (!$data) {
             throw new Exception();
         }
 
-        return $data;
+        foreach ($data as $item) {
+            $dataArray[] = Collection::make($item);
+        }
+
+        return $dataArray;
     }
 
     /**

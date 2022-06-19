@@ -28,7 +28,8 @@ class PlatformRepository extends Repository
     public function getByName($name)
     {
         $queryBuilder = $this->newQuery();
-        $queryBuilder->where('name', $name);
+        $queryBuilder->select('name', 'developer', 'generation', 'release_jp', 'release_us', 'release_br', 'media_type');
+        $queryBuilder->where('name', 'LIKE', "%{$name}%");
 
         return $queryBuilder->get();
     }
