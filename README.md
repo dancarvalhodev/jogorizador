@@ -1,4 +1,4 @@
-# Jogorizator
+# Jogorizador
 **Currently is under construction**
 
 A base CRUD and API for manage games roms.
