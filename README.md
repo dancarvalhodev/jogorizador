@@ -1,10 +1,9 @@
 # Jogorizador
-**Currently is under construction**
 
-A base CRUD and API for manage games roms.
+Um CRUD básico e API para gerenciar jogos e consoles.
 
-# Credits
+# Créditos
 [Slim 4 Skeleton](https://github.com/jerfeson/slim4-skeleton/tree/feature/3.0.0)
 
-# Tips
-You **need** do create two files based into `config/development-example.php`, create a development.php and a production.php.
+# Dicas
+Você **precisa** criar dois arquivos de banco (development.php e production.php) no diretório `config` baseados no arquivo `config/database-example.php`.
