@@ -1,11 +1,10 @@
 <?php
-
 use App\App;
 
 $config = [];
 
 $config['default'] = [
-    'env' => App::PRODUCTION,
+    'env' => App::getAppEnv(),
     'display_error_details' => App::isDevelopment(),
     'timezone' => 'America/Sao_Paulo',
     'locale' => 'pt_BR',
