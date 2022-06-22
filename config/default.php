@@ -5,7 +5,7 @@ use App\App;
 $config = [];
 
 $config['default'] = [
-    'env' => App::getAppEnv(),
+    'env' => App::PRODUCTION,
     'display_error_details' => App::isDevelopment(),
     'timezone' => 'America/Sao_Paulo',
     'locale' => 'pt_BR',
