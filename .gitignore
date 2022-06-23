@@ -3,6 +3,7 @@
 /vendor/
 /storage/logs/
 /storage/twig/
+/storage/cache
 
 #files
 composer.lock
