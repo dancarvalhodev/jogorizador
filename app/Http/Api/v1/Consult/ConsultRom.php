@@ -33,7 +33,7 @@ class ConsultRom extends Controller
     {
         $params = $this->getRequest()->getQueryParams();
 
-        if (count($params) !== 2) {
+        if (count($params) !== 1) {
             throw new HttpBadRequestException($this->getRequest());
         } elseif ($params['name'] == '') {
             throw new HttpBadRequestException($this->getRequest());
