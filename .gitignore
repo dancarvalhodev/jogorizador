@@ -5,6 +5,9 @@
 /storage/twig/
 /storage/cache
 
+#keys
+/data/keys/oauth/*
+
 #files
 composer.lock
 /config/development.php
