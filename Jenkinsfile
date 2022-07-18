@@ -26,7 +26,7 @@ pipeline {
       }
     }
 
-    stage(`Copy) {
+    stage('Copy') {
         steps {
 //           sh 'docker cp container_name:/app/test-reports'
           sh 'docker ps'
