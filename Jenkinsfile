@@ -1,8 +1,10 @@
 pipeline {
-  agent { docker { image 'dancarvalhodev/php:8.0' } }
+  agent {label 'docker-agent-template'}
 
   stages {
     stage('build') {
+      agent { docker { image 'dancarvalhodev/php:8.0' } }
+
       steps {
         echo 'building the application...'
         sh 'php -v'
