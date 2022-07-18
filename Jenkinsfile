@@ -5,7 +5,7 @@ pipeline {
     stage('build') {
       steps {
         echo 'building the application...'
-        sh 'docker ps'
+        sh 'php -v'
       }
     }
 
