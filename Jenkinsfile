@@ -23,9 +23,13 @@ pipeline {
       }
     }
 
-    stage('deploy') {
+    stage('Generate keys') {
       steps {
-        echo 'deploying the application...'
+        sh 'cd data/keys/oauth'
+        sh 'openssl genrsa -out private.key 2048'
+        sh 'openssl rsa -in private.key -pubout -out public.key'
+        sh 'cd ..'
+        sh 'chmod -R 777 oauth/'
       }
     }
   }
