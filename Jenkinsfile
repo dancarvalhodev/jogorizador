@@ -1,5 +1,10 @@
 pipeline {
-  agent {label 'docker-agent-template'}
+  agent {
+    docker {
+      image 'dancarvalhodev/agent:latest'
+      args '-v /var/jenkins_home/workspace:/home/jenkins/workspace'
+    }
+  }
 
   stages {
     stage('Check Dependencies') {
