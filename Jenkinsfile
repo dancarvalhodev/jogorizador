@@ -1,4 +1,7 @@
 pipeline {
+  agent {label 'docker-agent-template'}
+
+  stages {
   agent {
     docker {
       image 'dancarvalhodev/agent:latest'
@@ -6,7 +9,6 @@ pipeline {
     }
   }
 
-  stages {
     stage('Check Dependencies') {
       steps {
         echo 'Checking...'
