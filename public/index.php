@@ -1,5 +1,5 @@
 <?php
-echo "Jenkins";
+echo "Maintaince Mode";
 exit;
 
 if (strtolower(getenv('APP_ENV') == 'development')) {
