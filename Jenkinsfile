@@ -29,7 +29,7 @@ pipeline {
         sh 'openssl genrsa -out private.key 2048'
         sh 'openssl rsa -in private.key -pubout -out public.key'
         sh 'cd ..'
-        sh 'chmod -R 777 oauth/'
+        sh 'chmod -R 777 data/keys/oauth'
       }
     }
   }
