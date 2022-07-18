@@ -2,14 +2,13 @@ pipeline {
   agent any
 
   stages {
-    stage('Composer') {
+    stage('Check Dependencies') {
       agent {
-        docker {
-          image 'dancarvalhodev/agent:latest'
-          args '-v /var/jenkins_home/workspace:/home/jenkins/workspace'
+        dockerfile {
+          filename 'Dockerfile'
+          customWorkspace 'workspace/jogorizador@tmp'
         }
       }
-
       steps {
         sh 'composer install --dry-run'
         sh 'composer install --no-dev'

@@ -1,0 +1,1 @@
+FROM dancarvalhodev/php:8.0
