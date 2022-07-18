@@ -1,24 +1,17 @@
 pipeline {
-  agent {label 'docker-agent-template'}
+  agent any
 
   stages {
-  agent {
-    docker {
-      image 'dancarvalhodev/agent:latest'
-      args '-v /var/jenkins_home/workspace:/home/jenkins/workspace'
-    }
-  }
-
-    stage('Check Dependencies') {
-      steps {
-        echo 'Checking...'
-        sh 'composer install --dry-run'
+    stage('Composer') {
+      agent {
+        docker {
+          image 'dancarvalhodev/agent:latest'
+          args '-v /var/jenkins_home/workspace:/home/jenkins/workspace'
+        }
       }
-    }
 
-    stage('Install Dependencies') {
       steps {
-        echo 'Installing...'
+        sh 'composer install --dry-run'
         sh 'composer install --no-dev'
       }
     }
