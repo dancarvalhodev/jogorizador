@@ -1,14 +1,8 @@
 pipeline {
-  agent {label 'docker'}
+  agent {label 'docker-agent'}
 
   stages {
-    stage('Check Dependencies') {
-      agent {
-        dockerfile {
-          filename 'Dockerfile'
-          customWorkspace 'workspace/jogorizador@tmp'
-        }
-      }
+    stage('Composer') {
       steps {
         sh 'composer install --dry-run'
         sh 'composer install --no-dev'
