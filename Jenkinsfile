@@ -2,10 +2,17 @@ pipeline {
   agent {label 'docker-agent-template'}
 
   stages {
-    stage('build') {
+    stage('Check Dependencies') {
       steps {
-        echo 'building the application...'
-        sh 'php -v'
+        echo 'Checking...'
+        sh 'composer install --dry-run'
+      }
+    }
+
+    stage('Install Dependencies') {
+      steps {
+        echo 'Installing...'
+        sh 'composer install --no-dev'
       }
     }
 
