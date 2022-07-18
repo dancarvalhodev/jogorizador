@@ -25,5 +25,12 @@ pipeline {
         sh 'chmod -R 777 data/keys/oauth'
       }
     }
+
+    stage(`Copy) {
+        steps {
+//           sh 'docker cp container_name:/app/test-reports'
+          sh 'docker ps'
+        }
+    }
   }
 }
