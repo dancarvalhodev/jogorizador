@@ -16,9 +16,10 @@ pipeline {
       }
     }
 
-    stage('test') {
+    stage('Setting permissions') {
       steps {
-        echo 'testing the application...'
+        sh 'chown -R $USER:www-data storage/'
+        sh 'chmod -R ug+w storage/'
       }
     }
 
