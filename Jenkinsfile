@@ -1,9 +1,12 @@
 pipeline {
-    agent {
-        docker {
-            image 'dancarvalhodev/php:8.0'
-        }
-    }
+  agent {
+      docker {
+          image 'dancarvalhodev/php:8.0'
+      }
+  }
+  environment {
+    CI = 'true'
+  }
   stages {
     stage('Test') {
       steps {
