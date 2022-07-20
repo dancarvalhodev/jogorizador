@@ -2,7 +2,6 @@ pipeline {
     agent {
         docker {
             image 'dancarvalhodev/php:8.0'
-            args '-v /var/jenkins_home/workspace:/home/jenkins/workspace'
         }
     }
   stages {
