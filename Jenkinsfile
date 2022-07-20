@@ -1,6 +1,10 @@
 pipeline {
-  agent {label 'docker-agent'}
-
+    agent {
+        docker {
+            image 'dancarvalhodev/agent:latest'
+            args '-v /var/jenkins_home/workspace:/home/jenkins/workspace'
+        }
+    }
   stages {
     stage('Composer') {
       steps {
@@ -24,13 +28,6 @@ pipeline {
         sh 'cd ..'
         sh 'chmod -R 777 data/keys/oauth'
       }
-    }
-
-    stage('Copy') {
-        steps {
-//           sh 'docker cp container_name:/app/test-reports'
-          sh 'docker ps'
-        }
     }
   }
 }
