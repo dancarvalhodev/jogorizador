@@ -9,6 +9,9 @@ class RomCest
         $this->faker = Faker\Factory::create();
     }
 
+    /**
+     * @depends PlatformCest:testAddPlatform
+     */
     public function testAddRom(AcceptanceTester $I)
     {
         for ($i = 1; $i <= 100; $i++) {
@@ -23,8 +26,7 @@ class RomCest
             $I->fillField('release', $this->faker->date('Y-m-d'));
             $I->fillField('mode', $this->faker->word());
             $I->click('Insert');
-            $I->expect('Rom Inserted successfully');
-            $I->see('Rom Inserted successfully');
+            $I->dontSee('Failed to insert Rom');
         }
     }
 }

@@ -23,8 +23,7 @@ class PlatformCest
             $I->fillField('release_br', $this->faker->date('Y-m-d'));
             $I->fillField('media_type', $this->faker->word());
             $I->click('Insert');
-            $I->expect('Platform Inserted successfully');
-            $I->see('Platform Inserted successfully');
+            $I->dontSee('Failed to insert Platform');
         }
     }
 }

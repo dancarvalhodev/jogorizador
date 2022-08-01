@@ -64,11 +64,12 @@
     }
   },
   "require-dev": {
-    "codeception/codeception": "4.1.*",
-    "codeception/module-asserts": "^1.0.0",
-    "codeception/module-phpbrowser": "^1.0.0",
-    "codeception/module-rest": "1.2.*",
-    "codeception/module-webdriver": "^1.0",
+    "codeception/codeception": "4.*.*",
+    "codeception/module-asserts": "2.0.1",
+    "codeception/module-db": "*",
+    "codeception/module-phpbrowser": "2.0.3",
+    "codeception/module-rest": "2.0.2",
+    "codeception/module-webdriver": "2.0.3",
     "fakerphp/faker": "^1.20",
     "friendsofphp/php-cs-fixer": "^3.1",
     "overtrue/phplint": "^1.1",
