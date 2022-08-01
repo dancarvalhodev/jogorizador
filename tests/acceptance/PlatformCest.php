@@ -11,18 +11,20 @@ class PlatformCest
 
     public function testAddPlatform(AcceptanceTester $I)
     {
-        $I->amOnPage('/');
-        $I->see('Welcome to Jogorizator');
-        $I->click('Add Platform');
-        $I->fillField('name', $this->faker->word());
-        $I->fillField('developer', $this->faker->word());
-        $I->fillField('generation', $this->faker->word());
-        $I->fillField('release_jp', $this->faker->date('Y-m-d'));
-        $I->fillField('release_us', $this->faker->date('Y-m-d'));
-        $I->fillField('release_br', $this->faker->date('Y-m-d'));
-        $I->fillField('media_type', $this->faker->word());
-        $I->click('Send');
-        $I->expect('Platform Inserted successfully');
-        $I->see('Platform Inserted successfully');
+        for ($i = 1; $i <= 100; $i++) {
+            $I->amOnPage('/');
+            $I->see('Welcome to Jogorizator');
+            $I->click('Add Platform');
+            $I->fillField('name', $this->faker->word());
+            $I->fillField('developer', $this->faker->word());
+            $I->fillField('generation', $this->faker->word());
+            $I->fillField('release_jp', $this->faker->date('Y-m-d'));
+            $I->fillField('release_us', $this->faker->date('Y-m-d'));
+            $I->fillField('release_br', $this->faker->date('Y-m-d'));
+            $I->fillField('media_type', $this->faker->word());
+            $I->click('Insert');
+            $I->expect('Platform Inserted successfully');
+            $I->see('Platform Inserted successfully');
+        }
     }
 }
