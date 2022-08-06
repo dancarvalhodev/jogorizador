@@ -229,6 +229,10 @@ class DatabaseCommand extends Console
             $this->schemaBuilder->create('platforms', function ($table) {
                 $table->increments('id')->unsigned();
 
+                // FK
+                $table->integer('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('user');
+
                 $table->string('name');
                 $table->string('developer');
                 $table->string('generation');
@@ -250,6 +254,8 @@ class DatabaseCommand extends Console
                 //FK
                 $table->integer('platform_id')->unsigned();
                 $table->foreign('platform_id')->references('id')->on('platforms');
+                $table->integer('user_id')->unsigned();
+                $table->foreign('user_id')->references('id')->on('user');
 
                 $table->string('name');
                 $table->string('developer');
@@ -309,16 +315,16 @@ class DatabaseCommand extends Console
             'updated_at' => $date,
         ]);
 
-        $this->connection->table('platforms')->insert([
-            'name' => 'Super Nintendo Entertainment System',
-            'developer' => 'Nintendo',
-            'generation' => 'Fourth Generation',
-            'release_jp' => date("Y-m-d", strtotime("1990-11-21")),
-            'release_us' => date("Y-m-d", strtotime("1991-08-23")),
-            'release_br' => date("Y-m-d", strtotime("1993-08-30")),
-            'media_type' => 'Rom Cartridge',
-            'created_at' => $date,
-            'updated_at' => $date,
-        ]);
+//        $this->connection->table('platforms')->insert([
+//            'name' => 'Super Nintendo Entertainment System',
+//            'developer' => 'Nintendo',
+//            'generation' => 'Fourth Generation',
+//            'release_jp' => date("Y-m-d", strtotime("1990-11-21")),
+//            'release_us' => date("Y-m-d", strtotime("1991-08-23")),
+//            'release_br' => date("Y-m-d", strtotime("1993-08-30")),
+//            'media_type' => 'Rom Cartridge',
+//            'created_at' => $date,
+//            'updated_at' => $date,
+//        ]);
     }
 }

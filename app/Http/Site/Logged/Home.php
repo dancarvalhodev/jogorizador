@@ -38,6 +38,12 @@ class Home extends Controller
         );
     }
 
+    /**
+     * @return ResponseInterface
+     * @throws LoaderError
+     * @throws RuntimeError
+     * @throws SyntaxError
+     */
     public function indexRegister()
     {
         return $this->view->render(
