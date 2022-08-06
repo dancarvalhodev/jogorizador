@@ -2,7 +2,6 @@
 
 namespace Console\Migration;
 
-use App\Helpers\Crypto;
 use App\Helpers\Password;
 use Console\Console;
 use Illuminate\Database\Capsule\Manager as DB;
@@ -110,7 +109,6 @@ class DatabaseCommand extends Console
         }
 
         if (!$this->schemaBuilder->hasTable('oauth2_client')) {
-            //oauth2_client
             $this->schemaBuilder->create('oauth2_client', function ($table) {
                 $table->increments('id')->unsigned();
                 $table->string('identifier', 255);
@@ -122,7 +120,6 @@ class DatabaseCommand extends Console
         }
 
         if (!$this->schemaBuilder->hasTable('oauth2_session')) {
-            //oauth2_session
             $this->schemaBuilder->create('oauth2_session', function ($table) {
                 $table->increments('id')->unsigned();
                 $table->integer('oauth2_client_id')->unsigned();
@@ -136,7 +133,6 @@ class DatabaseCommand extends Console
         }
 
         if (!$this->schemaBuilder->hasTable('oauth2_auth_code')) {
-            //oauth2_auth_code
             $this->schemaBuilder->create('oauth2_auth_code', function ($table) {
                 $table->increments('id')->unsigned();
                 $table->integer('oauth2_session_id')->unsigned();
@@ -150,7 +146,6 @@ class DatabaseCommand extends Console
         }
 
         if (!$this->schemaBuilder->hasTable('profile')) {
-            //user
             $this->schemaBuilder->create('profile', function ($table) {
                 $table->increments('id')->unsigned();
                 $table->string('name', 45);
@@ -161,13 +156,13 @@ class DatabaseCommand extends Console
         }
 
         if (!$this->schemaBuilder->hasTable('client')) {
-            //client
             $this->schemaBuilder->create('client', function ($table) {
                 $table->increments('id')->unsigned();
 
                 //FK
                 $table->integer('oauth2_client_id')->unsigned();
                 $table->foreign('oauth2_client_id')->references('id')->on('oauth2_client');
+
                 $table->string('name', 45);
                 $table->tinyInteger('status');
                 $table->dateTime('created_at');
@@ -177,19 +172,17 @@ class DatabaseCommand extends Console
         }
 
         if (!$this->schemaBuilder->hasTable('user')) {
-            //user
             $this->schemaBuilder->create('user', function ($table) {
                 $table->increments('id')->unsigned();
 
                 //FK
                 $table->integer('profile_id')->unsigned();
                 $table->foreign('profile_id')->references('id')->on('profile');
-                $table->integer('client_id')->unsigned();
-                $table->foreign('client_id')->references('id')->on('client');
 
+                $table->string('name', 45);
+                $table->string('email', 100);
                 $table->string('username', 45);
                 $table->string('password', 255);
-                $table->tinyInteger('status');
                 $table->dateTime('created_at');
                 $table->dateTime('updated_at');
                 $table->softDeletes('deleted_at', 0);
@@ -285,12 +278,15 @@ class DatabaseCommand extends Console
             'updated_at' => $date,
         ]);
 
+        $this->connection->table('profile')->insert([
+            'name' => 'User',
+            'created_at' => $date,
+            'updated_at' => $date,
+        ]);
+
         $this->connection->table('oauth2_client')->insert([
-            //  Define your secret pattern
-            'identifier' => 'Mxv85bGRnZMpKtIfN82k5jEn3lYUPh6omYB7xVid',
-            //            'identifier' => Crypto::getToken(40),
-            'secret' => 'GH3pN8AWZNEfoxa304LtReaFiLO90K2eFUPC7EXgjBxbbgFFxCBqANNihaOl',
-            //            'secret' => Crypto::getToken(60),
+            'identifier' => 'NOT_USED',
+            'secret' => 'NOT_USED',
             'created_at' => $date,
             'updated_at' => $date,
         ]);
@@ -305,10 +301,10 @@ class DatabaseCommand extends Console
 
         $this->connection->table('user')->insert([
             'profile_id' => 1,
-            'client_id' => 1,
+            'name' => 'Ademir',
+            'email' => 'adm@adm.com',
             'username' => 'admin',
             'password' => Password::hash('admin'),
-            'status' => 1,
             'created_at' => $date,
             'updated_at' => $date,
         ]);

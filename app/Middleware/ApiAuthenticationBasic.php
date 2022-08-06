@@ -71,8 +71,8 @@ class ApiAuthenticationBasic implements MiddlewareInterface
     {
         $userRepo = $this->repositoryManager->get(UserRepository::class);
 
-        $user = isset($_SERVER['PHP_AUTH_USER']) ? $_SERVER['PHP_AUTH_USER'] : null;
-        $pass = isset($_SERVER['PHP_AUTH_PW']) ? $_SERVER['PHP_AUTH_PW'] : null;
+        $user = $_SERVER['PHP_AUTH_USER'] ?? null;
+        $pass = $_SERVER['PHP_AUTH_PW'] ?? null;
         $user = $userRepo->getUserEntityByCredentials(['username' => $user, 'password' => $pass]);
 
         if (!$user) {

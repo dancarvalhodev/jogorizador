@@ -5,6 +5,7 @@ namespace App\Http\Site\Logged;
 use App\Http\Controller;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface;
+use Slim\Exception\HttpBadRequestException;
 use Slim\Views\Twig;
 use Twig\Error\LoaderError;
 use Twig\Error\RuntimeError;
@@ -29,11 +30,28 @@ class Home extends Controller
      * @throws RuntimeError
      * @throws SyntaxError
      */
-    public function index()
+    public function indexLogin()
     {
         return $this->view->render(
             $this->getResponse(),
-            '@site/logged/index.twig'
+            '@site/login/index.twig'
         );
+    }
+
+    public function indexRegister()
+    {
+        return $this->view->render(
+            $this->getResponse(),
+            '@site/register/index.twig'
+        );
+    }
+
+    public function login()
+    {
+        $params = $this->getRequest()->getParsedBody();
+
+        if (!$params) {
+            return new HttpBadRequestException($this->getRequest());
+        }
     }
 }
