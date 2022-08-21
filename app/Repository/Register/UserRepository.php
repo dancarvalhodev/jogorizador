@@ -4,6 +4,7 @@ namespace App\Repository\Register;
 
 use App\Entity\Register\UserEntity;
 use App\Helpers\Password;
+use App\Helpers\Session;
 use App\Repository\Repository;
 use League\OAuth2\Server\Entities\ClientEntityInterface;
 use League\OAuth2\Server\Entities\UserEntityInterface;
@@ -67,9 +68,11 @@ class UserRepository extends Repository implements UserRepositoryInterface
         $user = $queryBuilder->get()->first();
 
         if (!Password::verify($data['password'], $user->password)) {
+            Session::set('user', false);
             return false;
         }
 
+        Session::set('user', true);
         return $user;
     }
 }

@@ -23,7 +23,17 @@ return function (App $app) {
     $app->get(
         '/',
         Home::class
+    )->setArgument('action', 'index');
+
+    $app->get(
+        '/login',
+        Home::class
     )->setArgument('action', 'indexLogin');
+
+    $app->get(
+        '/logout',
+        Home::class
+    )->setArgument('action', 'logout');
 
     $app->get(
         '/register',
@@ -34,6 +44,11 @@ return function (App $app) {
         '/login',
         Home::class
     )->setArgument('action', 'login');
+
+    $app->post(
+        '/register',
+        Home::class
+    )->setArgument('action', 'register');
 
     // ---------------------------------------------------------------------------
     // CRUD ROMS
