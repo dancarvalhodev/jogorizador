@@ -1,6 +1,5 @@
 pipeline {
     agent any
-
     stages {
         stage('Checkout') {
             steps {
@@ -8,9 +7,9 @@ pipeline {
             }
         }
         stage('Docker') {
+            agent { docker { image 'dancarvalhodev/php:8.0-arm' } }
             steps {
-                sh 'echo "oi"'
-                sh 'docker ps'
+                sh 'php -v'
             }
         }
     }
