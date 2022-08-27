@@ -9,6 +9,7 @@ pipeline {
         }
         stage('Docker') {
             steps {
+                sh 'echo "oi"'
                 sh 'docker ps'
             }
         }
