@@ -9,7 +9,7 @@ pipeline {
         stage('Docker') {
             agent { docker { image 'dancarvalhodev/php:8.0' } }
             steps {
-                sh 'php -v'
+                sh 'composer install'
             }
         }
     }
