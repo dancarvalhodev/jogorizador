@@ -3,7 +3,6 @@
 /vendor/
 /storage/logs/
 /storage/twig/
-/storage/cache
 
 #keys
 /data/keys/oauth/*
