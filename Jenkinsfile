@@ -8,8 +8,8 @@ pipeline {
         }
         stage('Permissions') {
             steps {
-                sh 'chown -R $USER:www-data storage/'
-                sh 'chmod -R ug+w storage/'
+                sh 'chown +x permissions.sh'
+                sh './permissions.sh'
             }
         }
         stage('Docker') {
@@ -17,10 +17,9 @@ pipeline {
             steps {
                 sh 'composer install'
                 sh 'php -v'
-                sh 'cd data/keys/oauth'
                 sh 'openssl genrsa -out private.key 2048'
                 sh 'openssl rsa -in private.key -pubout -out public.key'
-                sh 'cd ..'
+                sh 'mv private.key public.key data/keys/oauth'
                 sh 'chmod -R 777 oauth/'
             }
         }
