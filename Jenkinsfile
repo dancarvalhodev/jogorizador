@@ -16,10 +16,6 @@ pipeline {
             steps {
                 sh 'composer install'
                 sh 'php -v'
-                sh 'openssl genrsa -out private.key 2048'
-                sh 'openssl rsa -in private.key -pubout -out public.key'
-                sh 'mv private.key public.key data/keys/oauth'
-                sh 'chmod -R 777 oauth/'
             }
         }
     }
