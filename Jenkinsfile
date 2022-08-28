@@ -16,6 +16,7 @@ pipeline {
             steps {
                 sh 'composer install'
                 sh 'php -v'
+                sh './key.sh'
             }
         }
     }
