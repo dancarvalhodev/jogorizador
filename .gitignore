@@ -10,6 +10,4 @@
 
 #files
 composer.lock
-/config/development.php
-/config/production.php
 
