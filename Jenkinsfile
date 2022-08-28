@@ -4,9 +4,8 @@ pipeline {
         stage('Checkout') {
             steps {
                 dir('/var/lib/jenkins/workspace/Jogo@2') {
-                  sh 'sudo ./permissions2.sh'
+                  sh 'sudo rm -rf storage'
                 }
-
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dancarvalhodev/Jogorizador']]])
             }
         }
@@ -26,6 +25,8 @@ pipeline {
                 dir('/var/lib/jenkins/workspace/Jogo@2') {
                   sh 'sudo ./permissions.sh'
                 }
+
+                sh 'sudo systemctl restart docker'
             }
         }
     }
