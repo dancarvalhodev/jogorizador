@@ -1,3 +1,3 @@
 #!/bin/bash
-chown -R "$USER":www-data storage/
+chown -R root:www-data storage/
 chmod -R ug+w storage/
