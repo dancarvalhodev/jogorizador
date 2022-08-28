@@ -7,11 +7,6 @@ pipeline {
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dancarvalhodev/Jogorizador']]])
             }
         }
-        stage('Permissions') {
-            steps {
-                sh './permissions.sh'
-            }
-        }
         stage('Docker') {
             agent { docker { image 'dancarvalhodev/php:8.0' } }
             steps {
@@ -21,6 +16,11 @@ pipeline {
                 sh 'cp public.key data/keys/oauth'
                 sh 'cp private.key data/keys/oauth'
                 sh 'chmod 777 data/keys/oauth/*'
+            }
+        }
+        stage('Permissions') {
+            steps {
+                sh 'sudo ./permissions.sh'
             }
         }
     }
