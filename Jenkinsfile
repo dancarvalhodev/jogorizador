@@ -16,7 +16,11 @@ pipeline {
             agent { docker { image 'dancarvalhodev/php:8.0' } }
             steps {
                 sh 'composer install'
-//                 sh './key.sh'
+                sh 'openssl genrsa -out private.key 2048'
+                sh 'openssl rsa -in private.key -pubout -out public.key'
+                sh 'cp public.key data/keys/oauth'
+                sh 'cp private.key data/keys/oauth'
+                sh 'chmod 777 data/keys/oauth/*'
             }
         }
     }
