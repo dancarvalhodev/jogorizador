@@ -8,7 +8,6 @@ pipeline {
         }
         stage('Permissions') {
             steps {
-                sh 'chown +x permissions.sh'
                 sh './permissions.sh'
             }
         }
