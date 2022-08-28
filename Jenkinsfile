@@ -16,7 +16,7 @@ pipeline {
             agent { docker { image 'dancarvalhodev/php:8.0' } }
             steps {
                 sh 'composer install'
-                sh './key.sh'
+//                 sh './key.sh'
             }
         }
     }
