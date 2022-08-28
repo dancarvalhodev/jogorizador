@@ -3,6 +3,10 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
+                dir('/var/lib/jenkins/workspace/Jogo@2') {
+                  sh 'sudo ./permissions2.sh'
+                }
+
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dancarvalhodev/Jogorizador']]])
             }
         }
