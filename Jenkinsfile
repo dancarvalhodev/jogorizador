@@ -1,16 +1,9 @@
 pipeline {
     agent any
-        options {
-        // This is required if you want to clean before build
-        skipDefaultCheckout(true)
-    }
     stages {
         stage('Checkout') {
             steps {
-                // Clean before build
                 cleanWs()
-                // We need to explicitly checkout from SCM here
-                checkout scm
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dancarvalhodev/Jogorizador']]])
             }
         }
