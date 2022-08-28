@@ -15,7 +15,13 @@ pipeline {
                 sh 'cp public.key data/keys/oauth'
                 sh 'cp private.key data/keys/oauth'
                 sh 'chmod 777 data/keys/oauth/*'
-                sh './permission.sh'
+            }
+        }
+        stage('Set Storage Permissions') {
+            steps {
+                dir('/var/lib/jenkins/workspace/Jogo@2') {
+                  sh 'sudo ./permissions.sh'
+                }
             }
         }
     }
