@@ -3,7 +3,6 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                cleanWs()
                 checkout([$class: 'GitSCM', branches: [[name: '*/master']], extensions: [], userRemoteConfigs: [[url: 'https://github.com/dancarvalhodev/Jogorizador']]])
             }
         }
@@ -16,11 +15,7 @@ pipeline {
                 sh 'cp public.key data/keys/oauth'
                 sh 'cp private.key data/keys/oauth'
                 sh 'chmod 777 data/keys/oauth/*'
-            }
-        }
-        stage('Permissions') {
-            steps {
-                sh 'sudo ./permissions.sh'
+                sh './permission.sh'
             }
         }
     }

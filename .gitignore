@@ -1,8 +1,6 @@
 #folders
 /.idea/
 /vendor/
-/storage/logs/
-/storage/twig/
 
 #keys
 /data/keys/oauth/*
