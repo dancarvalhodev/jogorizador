@@ -73,6 +73,7 @@ class UserRepository extends Repository implements UserRepositoryInterface
         }
 
         Session::set('user', true);
+        Session::set('user_id', $user->id);
         return $user;
     }
 }

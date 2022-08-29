@@ -3,6 +3,7 @@
 namespace App\Service\Rom;
 
 use App\Entity\Rom\RomEntity;
+use App\Helpers\Session;
 use App\Repository\Rom\RomRepository;
 use App\Service\Service;
 use Carbon\Carbon;
@@ -176,6 +177,7 @@ class RomService extends Service
      */
     private function setRomAttributes($rom, $params) {
         $rom->name = $params['name'];
+        $rom->user_id = Session::get('user_id');
         $rom->platform_id = (int)$params['platforms'];
         $rom->developer = $params['developer'];
         $rom->publisher = $params['publisher'];

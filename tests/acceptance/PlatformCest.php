@@ -12,10 +12,15 @@ class PlatformCest
     public function testAddPlatform(AcceptanceTester $I)
     {
         for ($i = 1; $i <= 100; $i++) {
+            $I->amOnPage('/login');
+            $I->see('Jogorizador - Login');
+            $I->fillField('username', 'admin');
+            $I->fillField('password', 'admin');
+            $I->click('Sign in');
             $I->amOnPage('/');
             $I->see('Welcome to Jogorizator');
             $I->click('Add Platform');
-            $I->fillField('name', $this->faker->word());
+            $I->fillField('name', "Platform {$i}");
             $I->fillField('developer', $this->faker->word());
             $I->fillField('generation', $this->faker->word());
             $I->fillField('release_jp', $this->faker->date('Y-m-d'));

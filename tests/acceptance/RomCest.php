@@ -15,11 +15,16 @@ class RomCest
     public function testAddRom(AcceptanceTester $I)
     {
         for ($i = 1; $i <= 100; $i++) {
+            $I->amOnPage('/login');
+            $I->see('Jogorizador - Login');
+            $I->fillField('username', 'admin');
+            $I->fillField('password', 'admin');
+            $I->click('Sign in');
             $I->amOnPage('/');
             $I->see('Welcome to Jogorizator');
             $I->click('Add Rom');
             $I->fillField('name', $this->faker->word());
-            $I->selectOption('platforms', $this->faker->numberBetween(1, 100));
+            $I->selectOption('platforms', "Platform {$i}");
             $I->fillField('developer', $this->faker->word());
             $I->fillField('publisher', $this->faker->word());
             $I->fillField('series', $this->faker->word());

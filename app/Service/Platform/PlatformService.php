@@ -202,6 +202,7 @@ class PlatformService extends Service
      */
     private function setPlatformAttributes($platform, $params) {
         $platform->name = $params['name'];
+        $platform->user_id = Session::get('user_id');
         $platform->developer = $params['developer'];
         $platform->generation = $params['generation'];
         $platform->release_jp = $params['release_jp'];
