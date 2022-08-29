@@ -11,7 +11,7 @@ class PlatformCest
 
     public function testAddPlatform(AcceptanceTester $I)
     {
-        for ($i = 1; $i <= 100; $i++) {
+        for ($i = 1; $i <= 20; $i++) {
             $I->amOnPage('/login');
             $I->see('Jogorizador - Login');
             $I->fillField('username', 'admin');
