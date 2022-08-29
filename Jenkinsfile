@@ -18,7 +18,6 @@ pipeline {
                 sh 'cp public.key data/keys/oauth'
                 sh 'cp private.key data/keys/oauth'
                 sh 'chmod 777 data/keys/oauth/*'
-                sh 'php vendor/bin/codecept run acceptance '
             }
         }
         stage('Set Storage Permissions') {
@@ -28,6 +27,12 @@ pipeline {
                 }
 
                 sh 'sudo systemctl restart docker'
+            }
+        }
+        stage('Tests') {
+            agent { docker { image 'dancarvalhodev/php:8.0' } }
+            steps {
+                sh 'php vendor/bin/codecept run acceptance'
             }
         }
     }
