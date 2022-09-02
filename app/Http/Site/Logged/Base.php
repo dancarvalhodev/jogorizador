@@ -9,24 +9,13 @@ use App\Service\Register\UserService;
 use DI\Annotation\Inject;
 use Psr\Http\Message\ResponseInterface;
 use Slim\Exception\HttpBadRequestException;
-use Slim\Views\Twig;
-use Twig\Error\LoaderError;
-use Twig\Error\RuntimeError;
-use Twig\Error\SyntaxError;
 
 /**
- * Class Home
+ * Class Base
  * @package App\Http\Site\Logged
  */
-class Home extends Controller
+class Base extends Controller
 {
-    /**
-     * @Inject
-     *
-     * @var Twig
-     */
-    private Twig $view;
-
     /**
      * @Inject
      *
@@ -40,52 +29,6 @@ class Home extends Controller
      * @var IdentityStorage
      */
     private IdentityStorage $storage;
-
-    /**
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function index()
-    {
-        if (!Session::get('user')) {
-            return $this->getResponse()->withHeader('Location', '/login');
-        }
-
-        return $this->view->render(
-            $this->getResponse(),
-            '@site/logged/index.twig'
-        );
-    }
-
-    /**
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function indexLogin()
-    {
-        return $this->view->render(
-            $this->getResponse(),
-            '@site/login/index.twig'
-        );
-    }
-
-    /**
-     * @return ResponseInterface
-     * @throws LoaderError
-     * @throws RuntimeError
-     * @throws SyntaxError
-     */
-    public function indexRegister()
-    {
-        return $this->view->render(
-            $this->getResponse(),
-            '@site/register/index.twig'
-        );
-    }
 
     /**
      * @return ResponseInterface|HttpBadRequestException|void
@@ -132,10 +75,6 @@ class Home extends Controller
      */
     public function logout()
     {
-        if (!Session::get('user')) {
-            return $this->getResponse()->withHeader('Location', '/login');
-        }
-
         Session::destroy();
         return $this->getResponse()->withHeader('Location', '/login');
     }

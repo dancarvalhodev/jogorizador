@@ -2,53 +2,52 @@
 
 use App\Http\Api\v1\Consult\ConsultPlatform;
 use App\Http\Api\v1\Consult\ConsultRom;
+use App\Http\Site\Index;
 use App\Http\Site\Logged\Platform;
 use App\Http\Site\Logged\Rom;
-use App\Http\Site\Logged\Home;
+use App\Http\Site\Logged\Base;
+use App\Middleware\AuthBasic;
 use Slim\App;
 
 return function (App $app) {
-
-//    $app->any(
-//        '/api/v{version:[1]{1}}/auth/token',
-//        Token::class
-//    )->setArgument('action', 'post');
-//
 //    $app->any(
 //        '/api/v{version:[1]{1}}/{resource:[a-z-]+}[/{child:[a-z-]+}[/{id:[0-9]+}]]',
 //        ApiRouteResolver::class
 //    )->add(ApiAuthentication::class);
 
     // SITE
+    // INDEX
     $app->get(
         '/',
-        Home::class
+        Index::class
     )->setArgument('action', 'index');
 
     $app->get(
         '/login',
-        Home::class
+        Index::class
     )->setArgument('action', 'indexLogin');
 
     $app->get(
-        '/logout',
-        Home::class
-    )->setArgument('action', 'logout');
-
-    $app->get(
         '/register',
-        Home::class
+        Index::class
     )->setArgument('action', 'indexRegister');
 
+    // BASE ACTIONS
     $app->post(
         '/login',
-        Home::class
+        Base::class
     )->setArgument('action', 'login');
 
     $app->post(
         '/register',
-        Home::class
+        Base::class
     )->setArgument('action', 'register');
+
+    $app->get(
+        '/logout',
+        Base::class
+    )->setArgument('action', 'logout')->add(AuthBasic::class);
+
 
     // ---------------------------------------------------------------------------
     // CRUD ROMS
@@ -56,43 +55,51 @@ return function (App $app) {
     $app->get(
         '/insert/rom',
         Rom::class
-    )->setArgument('action', 'insertForm');
+    )->setArgument('action', 'insertForm')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/update/rom[/{id:[0-9]+}]',
         Rom::class
-    )->setArgument('action', 'updateForm');
+    )->setArgument('action', 'updateForm')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/show/rom[/{id:[0-9]+}]',
         Rom::class
-    )->setArgument('action', 'showRom');
+    )->setArgument('action', 'showRom')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/show/rom/all',
         Rom::class
-    )->setArgument('action', 'showRoms');
+    )->setArgument('action', 'showRoms')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/delete/rom[/{id:[0-9]+}]',
         Rom::class
-    )->setArgument('action', 'deleteForm');
+    )->setArgument('action', 'deleteForm')->add(AuthBasic::class);
+    ;
 
     // POST
     $app->post(
         '/crud/insert/rom',
         Rom::class
-    )->setArgument('action', 'insert');
+    )->setArgument('action', 'insert')->add(AuthBasic::class);
+    ;
 
     $app->post(
         '/crud/update/rom',
         Rom::class
-    )->setArgument('action', 'update');
+    )->setArgument('action', 'update')->add(AuthBasic::class);
+    ;
 
     $app->post(
         '/crud/delete/rom',
         Rom::class
-    )->setArgument('action', 'delete');
+    )->setArgument('action', 'delete')->add(AuthBasic::class);
+    ;
 
     // ---------------------------------------------------------------------------
     // CRUD PLATFORMS
@@ -100,52 +107,62 @@ return function (App $app) {
     $app->get(
         '/insert/platform',
         Platform::class
-    )->setArgument('action', 'insertForm');
+    )->setArgument('action', 'insertForm')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/update/platform[/{id:[0-9]+}]',
         Platform::class
-    )->setArgument('action', 'updateForm');
+    )->setArgument('action', 'updateForm')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/show/platform[/{id:[0-9]+}]',
         Platform::class
-    )->setArgument('action', 'showPlatform');
+    )->setArgument('action', 'showPlatform')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/show/platform/all',
         Platform::class
-    )->setArgument('action', 'showPlatforms');
+    )->setArgument('action', 'showPlatforms')->add(AuthBasic::class);
+    ;
 
     $app->get(
         '/delete/platform[/{id:[0-9]+}]',
         Platform::class
-    )->setArgument('action', 'deleteForm');
+    )->setArgument('action', 'deleteForm')->add(AuthBasic::class);
+    ;
 
     // POST
     $app->post(
         '/crud/insert/platform',
         Platform::class
-    )->setArgument('action', 'insert');
+    )->setArgument('action', 'insert')->add(AuthBasic::class);
+    ;
 
     $app->post(
         '/crud/update/platform',
         Platform::class
-    )->setArgument('action', 'update');
+    )->setArgument('action', 'update')->add(AuthBasic::class);
+    ;
 
     $app->post(
         '/crud/delete/platform',
         Platform::class
-    )->setArgument('action', 'delete');
+    )->setArgument('action', 'delete')->add(AuthBasic::class);
+    ;
 
     // API
     $app->any(
         '/api/v{version:[1]{1}}/platform',
         ConsultPlatform::class
-    )->setArgument('action', 'get');
+    )->setArgument('action', 'get')->add(AuthBasic::class);
+    ;
 
     $app->any(
         '/api/v{version:[1]{1}}/rom',
         ConsultRom::class
-    )->setArgument('action', 'get');
+    )->setArgument('action', 'get')->add(AuthBasic::class);
+    ;
 };

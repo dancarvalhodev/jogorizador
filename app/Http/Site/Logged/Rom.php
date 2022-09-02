@@ -210,7 +210,6 @@ class Rom extends Controller
 
         Session::set('status', false);
         return $this->getResponse()->withHeader('Location', '/show/rom/all');
-
     }
 
     /**
